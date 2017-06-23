@@ -1,22 +1,22 @@
 import datetime
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, relationship
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey
 
 from . import app
 
 engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
 Base = declarative_base()
-Session = sessionmake(bind=engine)
+Session = sessionmaker(bind=engine)
 session = Session()
 
 class Company(Base):
     __tablename__ = 'companies'
 
     id = Column(Integer, primary_key=True)
-    company = Column(String(100))
+    name = Column(String(100))
     location = Column(String(100))
     industry = Column(String(100))
     link_to_website = Column(String(250))
@@ -30,7 +30,7 @@ class Position(Base):
     date_added = Column(DateTime, default=datetime.datetime.now)
     date_due = Column(DateTime, default=datetime.datetime.now)
     link_to_website = Column(String(250))
-    company_id = Column(Integer, foreign_key='companies.id')
+    company_id = Column(Integer, ForeignKey('companies.id'))
     application = relationship('Application', backref='position')
 
 class Application(Base):
@@ -43,6 +43,6 @@ class Application(Base):
     recruitment_process = Column(Text)
     contact_info = Column(Text)
     application_status = Column(Boolean)
-    position_id = Column(Integer, foreign_key='positions.id')
+    position_id = Column(Integer, ForeignKey('positions.id'))
 
 Base.metadata.create_all(engine)

@@ -1,0 +1,28 @@
+{% macro render_company(company) %}
+<div class="company">
+    <div class="col-md-8 text-right metadata">
+      <!-- {{ company.name }} &nbsp; -->
+      <div class="text-right company-properties">
+          <h1>
+            <a href="/company/{{ company.id - 1 }}">
+              {{ company.name }}
+            </a>
+          </h1>
+      </div>
+      <div class="company-properties">
+        {{ company.location | markdown }}
+      </div>
+      <div class="company-properties">
+        {{ company.industry | markdown }}
+      </div>
+      <div class="company-properties"><a>
+        {{ company.link_to_website | markdown }}
+      </a></div>
+
+      <a class="edit" id="edit" href="/company/{{ company.id - 1 }}/edit"><span class="fa fa-pencil">&nbsp; &nbsp;</span></a>
+      <a class="delete" id="delete" href="/company/{{ company.id - 1 }}/confirm-delete"><span class="fa fa-trash"></span>&nbsp; &nbsp;</a>
+
+      </div>
+
+</div>
+{% endmacro %}

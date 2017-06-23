@@ -1,0 +1,9 @@
+{% import "macros.html" as macros %}
+{% extends "base.html" %}
+{% block content %}
+
+{% for company in companies %}
+{{ macros.render_company(company) }}
+{% endfor %}
+
+{% endblock %}
