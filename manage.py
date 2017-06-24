@@ -15,10 +15,10 @@ def run():
 def seed():
     location = "location y"
     industry = "industry z"
-    link_to_website = "this-is-a-link.com"
+    link_to_website = "www.google.com"
 
     for i in range(10):
-        company = Company(name="company {}".format(i), location=location,
+        company = Company(name="company {}".format(i + 12), location=location,
                     industry=industry, link_to_website=link_to_website)
         session.add(company)
     session.commit()

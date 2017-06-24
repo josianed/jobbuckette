@@ -1,9 +1,38 @@
 {% import "macros.html" as macros %}
 {% extends "base.html" %}
+
+{% block nav %}
+<div class="dropdown companies-per-page">
+    <form name="companies-per-page">
+      Items per page:&nbsp;
+      <select name="limit">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      <button type="submit">Go</button>
+    </form>
+</div>
+{% endblock %}
+
 {% block content %}
 
 {% for company in companies %}
 {{ macros.render_company(company) }}
 {% endfor %}
+
+<ul class="pager">
+    {% if has_next %}
+    <li class="previous" >
+    <a href="{{ url_for('companies', page=page + 1) }}">&larr; Older</a>
+    </li>
+    {% endif %}
+    {% if has_prev %}
+    <li class="next">
+    <a href="{{ url_for('companies', page=page - 1) }}">&rarr; Newer</a>
+    </li>
+    {% endif %}
+</ul>
 
 {% endblock %}

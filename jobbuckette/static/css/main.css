@@ -12,3 +12,9 @@ div.metadata {
   display: inline-block;
   font-size: 1em;
 }
+
+.companies-per-page {
+  text-align: right;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
