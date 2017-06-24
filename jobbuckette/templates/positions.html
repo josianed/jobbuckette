@@ -1,18 +1,19 @@
 {% import "macros.html" as macros %}
 {% extends "base.html" %}
 
-<!-- {% block nav %}
-<div class="row company-nav">
-  <div class="add-company col-md-2">
-    <a class="add-company" href="{{ url_for('add_position_get') }}">Add Position</a>
+{% block nav %}
+<div class="row position-nav">
+  <div class="add-position col-md-2">
+    <a class="add-position" href="{{ url_for('add_position_get', id=id) }}">Add Position</a>
   </div>
-{% endblock %} -->
+</div>
+{% endblock %}
 
 
 {% block content %}
 
 {% for position in positions %}
-{{ macros.render_position(position.company, position) }}
+{{ macros.render_position(position) }}
 {% endfor %}
 
 {% endblock %}

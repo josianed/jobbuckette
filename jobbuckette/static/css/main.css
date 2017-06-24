@@ -30,3 +30,8 @@ div.metadata {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
+.add-position {
+  float:left;
+  margin-bottom: 5px;
+}

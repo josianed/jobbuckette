@@ -75,47 +75,29 @@ def delete_company(page):
 
 @app.route("/company/<id>/positions")
 def positions(id):
-    companyid = int(id) + 1
-    companies = session.query(Company)
-    positions = session.query(Position)
-    for company in companies:
-        if str(company.id) == str(companyid):
-            company=company
-            break
-    matching_positions = []
-    for position in positions:
-        if position.company_id == str(company.id):
-            matching_positions.append(position)
+    company = session.query(Company).get(id)
+    positions = session.query(Position).filter(Position.company_id == id).all()
     return render_template('positions.html',
-    positions=matching_positions)
+    positions=positions)
 
 @app.route("/company/<id>/positions/add", methods=["GET"])
 def add_position_get(id):
-    companyid = int(id) + 1
-    companies = session.query(Company)
-    positions = session.query(Position)
-    for company in companies:
-        if str(company.id) == str(companyid):
-            company=company
-            break
-    matching_positions = []
-    for position in positions:
-        if position.company_id == str(company.id):
-            matching_positions.append(position)
-    return render_template("add_position.html", positions=matching_positions)
+    company = session.query(Company).get(id)
+    positions = session.query(Position).filter(Position.company_id == id).all()
+    return render_template("add_position.html", positions=positions, id=id)
 
 @app.route("/company/<id>/positions/add", methods=["POST"])
 def add_position_post(id):
-    id = int(id) + 1
+    id = id
     position = Position(
         position_name=request.form["inputPositionName"],
         date_due=request.form["inputDueDate"],
         link_to_website=request.form["inputWebsite"],
-        company_id=str(id)
+        company_id=id
     )
     session.add(position)
     session.commit()
-    return redirect(url_for('positions'))
+    return redirect(url_for('positions', id=id))
 
 @app.route("/company/position/<int:id>/edit")
 def edit_position_get(id):

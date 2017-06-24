@@ -29,12 +29,12 @@
 </div>
 {% endmacro %}
 
-{% macro render_position(company, position) %}
+{% macro render_position(position) %}
 <div class="row positions">
   <div class="col-md-2 company">
     {{ position.date_added | dateformat("%d/%m/%y") }}
   </div>
-    <div class="col-md-3 position">
+    <div class="col-md-2 position">
             <a href="/company/{{ position.company_id }}/position/{{ position.id - 1 }}">
               {{ position.position_name | markdown }}
             </a>
@@ -42,7 +42,7 @@
       <div class="col-md-2 company">
         {{ position.date_due | dateformat("%d/%m/%y") }}
       </div>
-      <div class="col-md-3 company">
+      <div class="col-md-4 company">
         <a>
           {{ position.link_to_website | markdown }}
         </a>
