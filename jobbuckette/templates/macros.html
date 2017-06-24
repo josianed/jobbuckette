@@ -1,28 +1,32 @@
 {% macro render_company(company) %}
-<div class="company">
-    <div class="col-md-8 text-right metadata">
-      <!-- {{ company.name }} &nbsp; -->
-      <div class="text-right company-properties">
-          <h1>
+<div class="row companies">
+    <div class="col-md-3 company">
+          <h4>
             <a href="/company/{{ company.id - 1 }}">
-              {{ company.name }}
+              {{ company.name | markdown}}
             </a>
-          </h1>
+          </h4>
       </div>
-      <div class="company-properties">
+      <div class="col-md-2 company">
         {{ company.location | markdown }}
       </div>
-      <div class="company-properties">
+      <div class="col-md-2 company">
         {{ company.industry | markdown }}
       </div>
-      <div class="company-properties"><a>
-        {{ company.link_to_website | markdown }}
-      </a></div>
-
-      <a class="edit" id="edit" href="/company/{{ company.id - 1 }}/edit"><span class="fa fa-pencil">&nbsp; &nbsp;</span></a>
-      <a class="delete" id="delete" href="/company/{{ company.id - 1 }}/confirm-delete"><span class="fa fa-trash"></span>&nbsp; &nbsp;</a>
-
+      <div class="col-md-3 company">
+        <a>
+          {{ company.link_to_website | markdown }}
+        </a>
       </div>
-
+      <div class="col-md-1 company">
+        <a class="edit" id="edit" href="/company/{{ company.id - 1 }}/edit">
+          <span class="fa fa-pencil">&nbsp; &nbsp;</span>
+        </a>
+      </div>
+      <div class="col-md-1 company">
+        <a class="delete" id="delete" href="/company/{{ company.id - 1 }}/confirm-delete">
+          <span class="fa fa-trash">&nbsp; &nbsp;</span>
+        </a>
+      </div>
 </div>
 {% endmacro %}

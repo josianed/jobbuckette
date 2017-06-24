@@ -3,7 +3,12 @@ div.metadata {
     font-size: 1.5em;
 }
 
-.company-properties {
+.companies {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.company {
   display: inline-block;
-  margin-right: 0.5em;
+  font-size: 1em;
 }
