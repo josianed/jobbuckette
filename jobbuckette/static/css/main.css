@@ -6,6 +6,7 @@ div.metadata {
 .companies {
   margin-right: 10px;
   margin-left: 10px;
+  margin-top: 10px;
 }
 
 .company {
@@ -13,7 +14,18 @@ div.metadata {
   font-size: 1em;
 }
 
+.add-company-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.5em;
+}
+
+.add-company {
+  float: left;
+}
+
 .companies-per-page {
+  float: right;
   text-align: right;
   margin-right: 10px;
   margin-bottom: 10px;

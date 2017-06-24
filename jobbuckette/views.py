@@ -7,8 +7,8 @@ from .database import session, Company, Position, Application
 PAGINATE_BY = 10
 
 @app.route("/")
-@app.route("/company")
-@app.route("/company/<int:page>")
+@app.route("/companies")
+@app.route("/companies/<int:page>")
 def companies(page=1):
 
     try:
@@ -44,9 +44,37 @@ def companies(page=1):
         total_pages=total_pages
     )
 
-@app.route("/company/<page>/position")
-def positions(page):
-    positionsid = int(page) + 1
+@app.route("/companies/add", methods=["GET"])
+def add_company_get():
+    return render_template("add_company.html")
+
+@app.route("/companies/add", methods=["POST"])
+def add_company_post():
+    company = Company(
+        name=request.form["inputCompanyName"],
+        location=request.form["inputLocation"],
+        industry=request.form["inputIndustry"],
+        link_to_website=request.form["inputWebsite"],
+    )
+    session.add(company)
+    session.commit()
+    return redirect(url_for('companies'))
+
+@app.route("/company/<int:id>/edit")
+def edit_company_get(page):
+    pass
+
+@app.route("/company/<int:id>/edit")
+def edit_company_post(page):
+    pass
+
+@app.route("/company/<int:id>/confirm-delete")
+def delete_company(page):
+    pass
+
+@app.route("/company/<id>/positions")
+def positions(id):
+    positionsid = int(id) + 1
     positions = session.query(Position)
     for position in positions:
         if str(position.id) == str(positionsid):
@@ -55,3 +83,15 @@ def positions(page):
 
     return render_template('positions.html',
     positions=positions)
+
+@app.route("/company/position/<int:id>/edit")
+def edit_position_get(id):
+    pass
+
+@app.route("/company/position/<int:id>/edit")
+def edit_position_post(id):
+    pass
+
+@app.route("/company/position/<int:id>/confirm-delete")
+def delete_position(id):
+    pass

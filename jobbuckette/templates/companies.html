@@ -1,21 +1,26 @@
 {% import "macros.html" as macros %}
 {% extends "base.html" %}
 
-
 {% block nav %}
-<div class="dropdown companies-per-page">
-    <form name="companies-per-page">
-      Items per page:&nbsp;
-      <select name="limit">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
-      <button type="submit">Go</button>
-    </form>
+<div class="row company-nav">
+  <div class="add-company col-md-2">
+    <a class="add-company" href="{{ url_for('add_company_get') }}">Add Company</a>
+  </div>
+  <div class="dropdown companies-per-page col-md-8">
+      <form name="companies-per-page">
+        Items per page:&nbsp;
+        <select name="limit">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <button type="submit">Go</button>
+      </form>
+  </div>
 </div>
 {% endblock %}
+
 
 {% block content %}
 

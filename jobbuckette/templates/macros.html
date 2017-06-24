@@ -1,11 +1,9 @@
 {% macro render_company(company) %}
 <div class="row companies">
     <div class="col-md-3 company">
-          <h4>
-            <a href="/company/{{ company.id - 1 }}/position">
+            <a href="/company/{{ company.id - 1 }}/positions">
               {{ company.name | markdown}}
             </a>
-          </h4>
       </div>
       <div class="col-md-2 company">
         {{ company.location | markdown }}
@@ -38,7 +36,7 @@
   </div>
     <div class="col-md-3 position">
           <h4>
-            <a href="/company/<int:id>/position/{{ position.id - 1 }}">
+            <a href="/company/position/{{ position.id - 1 }}">
               {{ position.position_name | markdown }}
             </a>
           </h4>
@@ -52,12 +50,12 @@
         </a>
       </div>
       <div class="col-md-1 company">
-        <a class="edit" id="edit" href="/company/<int:id>/position/{{ position.id - 1 }}/edit">
+        <a class="edit" id="edit" href="/company/position/{{ position.id - 1 }}/edit">
           <span class="fa fa-pencil">&nbsp; &nbsp;</span>
         </a>
       </div>
       <div class="col-md-1 company">
-        <a class="delete" id="delete" href="/company/<int:id>/position/{{ position.id - 1 }}/confirm-delete">
+        <a class="delete" id="delete" href="/company/position/{{ position.id - 1 }}/confirm-delete">
           <span class="fa fa-trash">&nbsp; &nbsp;</span>
         </a>
       </div>
