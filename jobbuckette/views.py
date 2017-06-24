@@ -2,11 +2,12 @@ from flask import render_template
 from flask import request, redirect, url_for, flash
 
 from . import app
-from .database import session, Company
+from .database import session, Company, Position, Application
 
 PAGINATE_BY = 10
 
 @app.route("/")
+@app.route("/company")
 @app.route("/company/<int:page>")
 def companies(page=1):
 
@@ -42,3 +43,15 @@ def companies(page=1):
         page=page,
         total_pages=total_pages
     )
+
+@app.route("/company/<page>/position")
+def positions(page):
+    positionsid = int(page) + 1
+    positions = session.query(Position)
+    for position in positions:
+        if str(position.id) == str(positionsid):
+            position=position
+            break
+
+    return render_template('positions.html',
+    positions=positions)

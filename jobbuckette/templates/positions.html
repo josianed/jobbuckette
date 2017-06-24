@@ -1,0 +1,10 @@
+{% import "macros.html" as macros %}
+{% extends "companies.html" %}
+
+{% block content %}
+
+{% for position in positions %}
+{{ macros.render_position(position) }}
+{% endfor %}
+
+{% endblock %}
