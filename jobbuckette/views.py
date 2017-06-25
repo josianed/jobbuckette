@@ -138,7 +138,7 @@ def application_new_get(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
     application = session.query(Application).filter(Application.position_id == posid).first()
-    return render_template("edit_application.html", application=application, company=company, position=position)
+    return render_template("add_application.html", application=application, company=company, position=position)
 
 @app.route("/companies/<int:coid>/positions/<int:posid>/applications/create", methods=["POST"])
 def application_post(coid, posid):
@@ -156,3 +156,27 @@ def application_post(coid, posid):
     session.add(application)
     session.commit()
     return redirect(url_for('position_get', coid=coid, posid=posid))
+
+@app.route("/companies/<int:coid>/positions/<int:posid>/applications/<int:appid>/edit")
+def application_edit_get(appid, coid, posid):
+    company = session.query(Company).get(coid)
+    position = session.query(Position).get(posid)
+    application = session.query(Application).get(appid)
+    return render_template("edit_application.html", application=application, company=company, position=position)
+
+@app.route("/companies/<int:coid>/positions/<int:posid>/applications/<int:appid>/save", methods=["POST"])
+def application_edit(coid, posid, appid):
+    # TODO: fix update booleans
+    # TODO: prepopulate fields when editing
+    company = session.query(Company).get(coid)
+    position = session.query(Position).get(posid)
+    application = session.query(Application).get(appid)
+    application.application_status=request.form.get("application-status"),
+    application.contact_info=request.form.get("contactInfoBox"),
+    application.recruitment_process=request.form.get("recruitmentProcessBox"),
+    application.cv=(request.form.get("cvCheckbox") == "on"),
+    application.cover_letter=(request.form.get("coverLetterCheckbox") == "on"),
+    application.application_questions=(request.form.get("recruitmentQsCheckbox") == "on"),
+    application.position_id=posid
+    session.commit()
+    return redirect(url_for('position_get', coid=company.id, posid=position.id))

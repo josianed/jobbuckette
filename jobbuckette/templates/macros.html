@@ -73,15 +73,15 @@
       <div class="checkbox-inline">
         <div class="checkbox-inline">
           <label for="checkbox-inline">CV</label>
-            <input disabled type="checkbox" name="cvCheckbox" value="{{ application.cv }}">
+            <input disabled type="checkbox" name="cvCheckbox"{% if application.cv %} checked{% endif %}>
         </div>
         <div class="checkbox-inline">
           <label for="checkbox-inline">Cover Letter</label>
-            <input disabled type="checkbox" name="coverLetterCheckbox" value="{{ application.cover_letter }}">
+            <input disabled type="checkbox" name="coverLetterCheckbox"{% if application.cover_letter %} checked{% endif %}>
         </div>
         <div class="checkbox-inline">
           <label for="checkbox-inline">Recruitment Questions</label>
-            <input disabled type="checkbox" name="recruitmentQsCheckbox" value="{{ application.recruitment_questions }}">
+            <input disabled type="checkbox" name="recruitmentQsCheckbox"{% if application.application_questions %} checked{% endif %}>
         </div>
       </div>
       <div class="form-group">
@@ -95,17 +95,23 @@
             </select>
       </div>
   </div>
-  <a class="edit btn btn-default" href="/companies/{{ company.id }}/positions/{{ position.id }}/applications/new"><span class="fa fa-pencil"></span>&nbsp;Edit Application&nbsp;</a>
+
+  {% if not position.application %}
+  <a class="edit btn btn-default" href="/companies/{{ company.id }}/positions/{{ position.id }}/applications/new"><span class="fa fa-plus"></span>&nbsp;New Application&nbsp;</a>
+ {% endif %}
+ {% if position.application %}
+  <a class="edit btn btn-default" href="/companies/{{ company.id }}/positions/{{ position.id }}/applications/{{ application.id }}/edit"><span class="fa fa-pencil"></span>&nbsp;Edit Application&nbsp;</a>
+{% endif %}
 {% endmacro %}
 
-{% macro edit_application(application, company, position) %}
+{% macro add_application(application, company, position) %}
 <h3>{{ position.position_name }} at {{ company.name }}</h3>
 
 <form role="form" action="{{ url_for('application_post', coid=company.id, posid=position.id) }}" method="post">
   <div class="row">
       <div class="form-group">
         <label for="recruitmentProcessBox">Recruitment Process</label>
-        <textarea class="form-control" name="recruitmentProcessBox" placeholder="Details about recruitment process" rows="5"></textarea>
+        <textarea class="form-control" name="recruitmentProcessBox" placeholder="Details about recruitment process" rows="5">{{ application.recruitment_process }}</textarea>
       </div>
       <div class="required-docs">
           <h4>Required Documents</h4>
@@ -126,11 +132,63 @@
       </div>
       <div class="form-group">
         <label for="contactInfoBox">Contact Info</label>
-        <textarea class="form-control" name="contactInfoBox" placeholder="Details about person to contact for this application" rows="3"></textarea>
+        <textarea class="form-control" name="contactInfoBox" placeholder="Details about person to contact for this application" rows="3">{{ application.contact_info }}</textarea>
       </div>
       <div class="dropdown application-docs col-md-8">
             Application Status:&nbsp;&nbsp;
             <select name="application-status">
+              <option value="Pending">Pending</option>
+              <option value="Started">Started</option>
+              <option value="Submitted">Submitted</option>
+              <option value="Interviewing">Interviewing</option>
+              <option value="Offer">Offer</option>
+              <option value="Offer Accepted">Offer Accepted</option>
+              <option value="Offer Refused">Offer Refused</option>
+              <option value="Completed">Completed</option>
+            </select>
+
+      </div>
+  </div>
+  <button type="submit" class="btn btn-default"><span class="fa fa-floppy-o"></span>&nbsp;Save&nbsp;</button>
+  <a class="confirm-cancel btn btn-default" href="{{ url_for('position_get', coid=company.id, posid=position.id) }}")><span class="fa fa-ban"></span>&nbsp;Cancel&nbsp;</a>
+</form>
+{% endmacro %}
+
+{% macro edit_application(application, company, position) %}
+<h3>{{ position.position_name }} at {{ company.name }}</h3>
+
+<form role="form" action="{{ url_for('application_edit', appid=application.id, coid=company.id, posid=position.id) }}" method="post">
+  <div class="row">
+      <div class="form-group">
+        <label for="recruitmentProcessBox">Recruitment Process</label>
+        <textarea class="form-control" name="recruitmentProcessBox" placeholder="Details about recruitment process" rows="5">{{ application.recruitment_process }}</textarea>
+      </div>
+      <div class="required-docs">
+          <h4>Required Documents</h4>
+      </div>
+      <div class="checkbox-inline">
+        <div class="checkbox-inline">
+          <label for="checkbox-inline">CV</label>
+            <input type="checkbox" name="cvCheckbox" value="{{ application.cv }}">
+        </div>
+        <div class="checkbox-inline">
+          <label for="checkbox-inline">Cover Letter</label>
+            <input type="checkbox" name="coverLetterCheckbox" value="{{ application.cover_letter }}">
+        </div>
+        <div class="checkbox-inline">
+          <label for="checkbox-inline">Recruitment Questions</label>
+            <input type="checkbox" name="recruitmentQsCheckbox" value="{{ application.application_questions }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="contactInfoBox">Contact Info</label>
+        <textarea class="form-control" name="contactInfoBox" placeholder="Details about person to contact for this application" rows="3">{{ application.contact_info }}</textarea>
+      </div>
+      <div class="dropdown application-docs col-md-8">
+            Application Status:&nbsp;&nbsp;
+            <select name="application-status">
+              <!-- TODO: Remove duplicate application statuses. Set "selected" instead. -->
+              <option selected value="{{ application.application_status }}">{{ application.application_status }}</option>
               <option value="Pending">Pending</option>
               <option value="Started">Started</option>
               <option value="Submitted">Submitted</option>
