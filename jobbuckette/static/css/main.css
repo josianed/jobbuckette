@@ -32,12 +32,19 @@ div.metadata {
 }
 
 .company-header {
-  margin-top: -10px;
   text-align: center;
-  margin-left: 50px;
 }
 
 .company-rows {
+  margin-bottom: 50px;
+  font-size: 1.2em;
+}
+
+.positions-header {
+  text-align: center;
+}
+
+.positions-rows {
   margin-bottom: 50px;
   font-size: 1.2em;
 }

@@ -127,8 +127,31 @@ def delete_position(coid, posid):
     return redirect(url_for('positions', company=company, coid=coid, posid=posid))
 
 @app.route("/companies/<int:coid>/positions/<int:posid>")
-def application(coid, posid):
+def position_get(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
     application = session.query(Application).filter(Application.position_id == posid).all()
-    return render_template("applications.html", application=application, company=company, position=position, coid=coid, posid=posid)
+    return render_template("applications.html", application=application, company=company, position=position)
+
+@app.route("/companies/<int:coid>/positions/<int:posid>/applications/new")
+def application_new_get(coid, posid):
+    company = session.query(Company).get(coid)
+    position = session.query(Position).get(posid)
+    application = session.query(Application).filter(Application.position_id == posid).all()
+    return render_template("edit_application.html", application=application, company=company, position=position)
+
+@app.route("/companies/<int:coid>/positions/<int:posid>/applications/create", methods=["POST"])
+def application_post(coid, posid):
+    company = session.query(Company).get(coid)
+    position = session.query(Position).get(posid)
+    application = Application(
+        application_status=request.form.get("application-status"),
+        contact_info=request.form.get("contactInfoBox"),
+        recruitment_process=request.form.get("recruitmentProcessBox"),
+        cv=(request.form.get("cvCheckbox") == "on"),
+        cover_letter=(request.form.get("coverLetterCheckbox") == "on"),
+        application_questions=(request.form.get("recruitmentQsCheckbox") == "on")
+    )
+    session.add(application)
+    session.commit()
+    return redirect(url_for('position_get', coid=coid, posid=posid))
