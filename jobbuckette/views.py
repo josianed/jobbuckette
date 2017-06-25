@@ -116,19 +116,19 @@ def edit_position_post(coid, posid):
 def delete_position_get(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
-    return render_template("delete_position.html", position=position, company=company)
+    return render_template("delete_position.html", position=position, company=company, coid=coid, posid=posid)
 
 @app.route("/companies/<int:coid>/positions/<int:posid>/delete", methods=["GET", "DELETE"])
-def delete_position(coid):
+def delete_position(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
     session.delete(position)
     session.commit()
-    return redirect(url_for('positions', company=company, position=position))
+    return redirect(url_for('positions', company=company, coid=coid, posid=posid))
 
 @app.route("/companies/<int:coid>/positions/<int:posid>")
 def application(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
     application = session.query(Application).filter(Application.position_id == posid).all()
-    return render_template("applications.html", application=application, company=company, position=position)
+    return render_template("applications.html", application=application, company=company, position=position, coid=coid, posid=posid)

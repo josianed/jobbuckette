@@ -35,7 +35,7 @@
     {{ position.date_added | dateformat("%d/%m/%y") }}
   </div>
     <div class="col-md-2 position">
-            <a href="/companies/{{ position.company_id }}/position/{{ position.id }}">
+            <a href="/companies/{{ position.company_id }}/positions/{{ position.id }}">
               {{ position.position_name | markdown }}
             </a>
       </div>
@@ -48,12 +48,12 @@
         </a>
       </div>
       <div class="col-md-1 position">
-        <a class="edit" id="edit" href="/companies/{{ position.company_id }}/position/{{ position.id }}/edit">
+        <a class="edit" id="edit" href="/companies/{{ position.company_id }}/positions/{{ position.id }}/edit">
           <span class="fa fa-pencil">&nbsp; &nbsp;</span>
         </a>
       </div>
       <div class="col-md-1 position">
-        <a class="delete" id="delete" href="/companies/{{ position.company_id }}/position/{{ position.id }}/confirm-delete">
+        <a class="delete" id="delete" href="/companies/{{ position.company_id }}/positions/{{ position.id }}/confirm-delete">
           <span class="fa fa-trash">&nbsp; &nbsp;</span>
         </a>
       </div>
