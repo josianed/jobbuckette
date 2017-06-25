@@ -20,6 +20,9 @@
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- Bootstrap -->
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <!-- Include the plugin's CSS and JS: -->
+        <script type="text/javascript" src="js/dropdown.js"></script>
+        <link rel="stylesheet" href="css/dropdown.css" type="text/css"/>
     </head>
 
     <body>
@@ -44,6 +47,7 @@
             {% block nav %}{% endblock %}
             {% block content %}{% endblock %}
             {% block add %}{% endblock %}
+            {% block delete %}{% endblock %}
         </div>
     </body>
 </html>

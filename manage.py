@@ -17,18 +17,18 @@ def seed():
     industry = "industry z"
     link_to_website = "www.google.com"
 
-    for i in range(10, 20, 1):
-        company = Company(name="company {}".format(i+1), location=location,
-                    industry=industry, link_to_website=link_to_website)
-        session.add(company)
+    # for i in range(1, 18, 1):
+    #     company = Company(name="Company {}".format(i), location=location,
+    #                 industry=industry, link_to_website=link_to_website)
+    #     session.add(company)
+    #     session.commit()
+    #     print("id is: {}".format(company.id))
 
-    for i in range(10, 20, 1):
-        position = Position(position_name="position {}".format(i+1),
-                    link_to_website="www.position{}.com".format(i+1), company_id=i)
-
+    for i in range(2, 18, 2):
+        position = Position(position_name="Position {}".format(i),
+                    link_to_website="www.position{}.com".format(i), company_id=i)
         session.add(position)
-
-    session.commit()
+        session.commit()
     # session.query(Company).delete()
     # session.query(Position).delete()
     # session.commit()

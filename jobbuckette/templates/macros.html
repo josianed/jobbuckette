@@ -1,7 +1,7 @@
 {% macro render_company(company) %}
 <div class="row companies">
     <div class="col-md-3 company">
-            <a href="/company/{{ company.id - 1 }}/positions">
+            <a href="/companies/{{ company.id }}/positions">
               {{ company.name | markdown}}
             </a>
       </div>
@@ -17,16 +17,16 @@
         </a>
       </div>
       <div class="col-md-1 company">
-        <a class="edit" id="edit" href="/company/{{ company.id - 1 }}/edit">
+        <a class="edit" id="edit" href="/companies/{{ company.id }}/edit">
           <span class="fa fa-pencil">&nbsp; &nbsp;</span>
         </a>
       </div>
       <div class="col-md-1 company">
-        <a class="delete" id="delete" href="/company/{{ company.id - 1 }}/confirm-delete">
+        <a class="delete" id="delete" href="/companies/{{ company.id }}/confirm-delete">
           <span class="fa fa-trash">&nbsp; &nbsp;</span>
         </a>
       </div>
-</div>
+    </div>
 {% endmacro %}
 
 {% macro render_position(position) %}
@@ -35,7 +35,7 @@
     {{ position.date_added | dateformat("%d/%m/%y") }}
   </div>
     <div class="col-md-2 position">
-            <a href="/company/{{ position.company_id }}/position/{{ position.id - 1 }}">
+            <a href="/companies/{{ position.company_id }}/position/{{ position.id }}">
               {{ position.position_name | markdown }}
             </a>
       </div>
@@ -48,14 +48,64 @@
         </a>
       </div>
       <div class="col-md-1 company">
-        <a class="edit" id="edit" href="/company/{{ position.company_id }}/position/{{ position.id - 1 }}/edit">
+        <a class="edit" id="edit" href="/companies/{{ position.company_id }}/position/{{ position.id }}/edit">
           <span class="fa fa-pencil">&nbsp; &nbsp;</span>
         </a>
       </div>
       <div class="col-md-1 company">
-        <a class="delete" id="delete" href="/company/{{ position.company_id }}/position/{{ position.id - 1 }}/confirm-delete">
+        <a class="delete" id="delete" href="/companies/{{ position.company_id }}/position/{{ position.id }}/confirm-delete">
           <span class="fa fa-trash">&nbsp; &nbsp;</span>
         </a>
       </div>
 </div>
+{% endmacro %}
+
+{% macro render_application(application) %}
+
+<form role="form" method="POST">
+  <div class="row">
+      <div class="form-group">
+        <label for="recruitment-process">Recruitment Process</label>
+        <textarea class="form-control" name="recruitment-process" placeholder="Details about recruitment process" rows="5"></textarea>
+      </div>
+      <div class="required-docs">
+          <h4>Required Documents</h4>
+      </div>
+      <div class="checkbox-inline">
+        <div class="checkbox-inline">
+          <label for="checkbox-inline">CV</label>
+            <input type="checkbox" name="cvCheckbox" value="{{ application.cv }}">
+        </div>
+        <div class="checkbox-inline">
+          <label for="checkbox-inline">Cover Letter</label>
+            <input type="checkbox" name="coverLetterCheckbox" value="{{ application.cover_letter }}">
+        </div>
+        <div class="checkbox-inline">
+          <label for="checkbox-inline">Recruitment Questions</label>
+            <input type="checkbox" name="RecruitmentQsCheckbox" value="{{ application.recruitment_questions }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="recruitment-process">Contact Info</label>
+        <textarea class="form-control" name="recruitment-process" placeholder="Details about person to contact for this application" rows="5"></textarea>
+      </div>
+      <div class="dropdown application-docs col-md-8">
+          <form name="application-docs">
+            Application Status:&nbsp;&nbsp;
+            <select name="Application Status">
+              <option value="Pending">Pending</option>
+              <option value="Started">Started</option>
+              <option value="Submitted">Submitted</option>
+              <option value="Interviewing">Interviewing</option>
+              <option value="Hold Offer">Offer</option>
+              <option value="Hold Offer">Offer Accepted</option>
+              <option value="Hold Offer">Offer Accepted</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <button type="submit">&#10003;</button>
+          </form>
+      </div>
+  </div>
+  <button type="submit" class="btn btn-default">Save Progress</button>
+</form>
 {% endmacro %}

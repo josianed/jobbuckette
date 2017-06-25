@@ -42,7 +42,7 @@ class Application(Base):
     application_questions = Column(Boolean)
     recruitment_process = Column(Text)
     contact_info = Column(Text)
-    application_status = Column(Boolean)
+    application_status = Column(String(500))
     position_id = Column(Integer, ForeignKey('positions.id'))
 
 Base.metadata.create_all(engine)

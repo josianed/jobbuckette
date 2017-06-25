@@ -1,0 +1,10 @@
+{% import "macros.html" as macros %}
+{% extends "base.html" %}
+
+{% block delete %}
+<section class="confirm">
+  <h2>Are you sure you want to delete {{ company.name }}?</h3>
+  <a class="confirm-delete btn btn-default" href="/companies/{{ company.id }}/delete"><span class="fa fa-trash"></span>&nbsp;Delete&nbsp;</a>
+  <a class="confirm-cancel btn btn-default" href="{{ url_for('companies') }}")><span class="fa fa-ban"></span>&nbsp;Cancel&nbsp;</a>
+</section>
+{% endblock %}

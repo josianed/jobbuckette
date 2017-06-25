@@ -7,7 +7,6 @@ from .database import session, Company, Position, Application
 PAGINATE_BY = 10
 
 @app.route("/")
-@app.route("/company")
 @app.route("/companies")
 @app.route("/companies/<int:page>")
 def companies(page=1):
@@ -61,52 +60,75 @@ def add_company_post():
     session.commit()
     return redirect(url_for('companies'))
 
-@app.route("/company/<int:id>/edit")
-def edit_company_get(page):
+@app.route("/companies/<int:coid>/edit")
+def edit_company_get(coid):
     pass
 
-@app.route("/company/<int:id>/edit")
-def edit_company_post(page):
+@app.route("/companies/<int:coid>/edit")
+def edit_company_post(coid):
     pass
 
-@app.route("/company/<int:id>/confirm-delete")
-def delete_company(page):
-    pass
+@app.route("/companies/<int:coid>/confirm-delete", methods=["GET"])
+def delete_company_get(coid):
+    company = session.query(Company).get(coid)
+    return render_template("delete_company.html", company=company)
+#
+@app.route("/companies/<int:coid>/delete", methods=["GET", "DELETE"])
+def delete_company(coid):
+    company = session.query(Company).get(coid)
+    session.delete(company)
+    session.commit()
+    return redirect(url_for('companies'))
 
-@app.route("/company/<id>/positions")
-def positions(id):
+@app.route("/companies/<int:coid>/positions", methods=["GET"])
+def positions(coid):
     company = session.query(Company).get(id)
     positions = session.query(Position).filter(Position.company_id == id).all()
-    return render_template('positions.html',
-    positions=positions)
+    return render_template('positions.html', positions=positions)
 
-@app.route("/company/<id>/positions/add", methods=["GET"])
-def add_position_get(id):
-    company = session.query(Company).get(id)
-    positions = session.query(Position).filter(Position.company_id == id).all()
-    return render_template("add_position.html", positions=positions, id=id)
+@app.route("/companies/<int:coid>/positions/add", methods=["GET"])
+def add_position_get(coid):
+    company = session.query(Company).get(coid)
+    position = session.query(Position).filter(Position.company_id == coid).all()
+    return render_template("add_position.html", company=company, position=position)
 
-@app.route("/company/<id>/positions/add", methods=["POST"])
-def add_position_post(id):
-    id = id
+@app.route("/companies/<int:coid>/positions/add", methods=["POST"])
+def add_position_post(coid):
     position = Position(
         position_name=request.form["inputPositionName"],
         date_due=request.form["inputDueDate"],
         link_to_website=request.form["inputWebsite"],
-        company_id=id
+        company_id=coid
     )
     session.add(position)
     session.commit()
-    return redirect(url_for('positions', id=id))
+    return redirect(url_for('positions', coid=coid))
 
-@app.route("/company/position/<int:id>/edit")
-def edit_position_get(id):
+@app.route("/companies/<int:coid>/position/<int:posid>/edit")
+def edit_position_get(coid, posid):
     pass
 
-@app.route("/company/position/<int:id>/edit")
-def edit_position_post(id):
+@app.route("/companies/<int:coid>/position/<int:posid>/edit")
+def edit_position_post(coid, posid):
     pass
 
-@app.route("/company/position/<int:id>/confirm-delete")
-def delete_position(id):
-    pass
+@app.route("/companies/<int:coid>/position/<int:posid>/confirm-delete", methods=["GET", "DELETE"])
+def delete_position_get(coid, posid):
+    company = session.query(Company).get(coid)
+    position = session.query(Position).get(posid)
+    return render_template("delete_position.html", position=position, company=company)
+
+@app.route("/companies/<int:coid>/position/<int:posid>/delete", methods=["POST", "DELETE"])
+def delete_position(coid):
+    company = session.query(Company).get(coid)
+    position = session.query(Position).get(posid)
+    session.delete(position)
+    session.commit()
+    return redirect(url_for('positions', company=company, position=position))
+
+@app.route("/companies/<int:coid>/position/<int:posid>")
+def application(coid, posid):
+    company = session.query(Company).get(coid)
+    position = session.query(Position).get(posid)
+    application = session.query(Application).filter(Application.position_id == posid).all()
+    return render_template("applications.html", application=application, company=company, position=position)
