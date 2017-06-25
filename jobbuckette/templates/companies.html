@@ -21,8 +21,9 @@
 </div>
 {% endblock %}
 
-<h1>Companies</h1>
-<div class="row companies">
+{% block content %}
+<h3 class="company-header">Companies</h3>
+<div class="company-rows">
     <div class="col-md-3 company">
         Company Name
       </div>
@@ -45,9 +46,6 @@
       </div>
 </div>
 
-
-{% block content %}
-
 {% for company in companies %}
 {{ macros.render_company(company) }}
 {% endfor %}
@@ -64,6 +62,5 @@
     </li>
     {% endif %}
 </ul>
-
 
 {% endblock %}

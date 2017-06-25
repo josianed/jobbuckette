@@ -4,13 +4,33 @@
 {% block nav %}
 <div class="row position-nav">
   <div class="add-position col-md-2">
-    <a class="add-position" href="{{ url_for('add_position_get', id=id) }}">Add Position</a>
+    <a class="add-position" href="{{ url_for('add_position_get', coid=coid) }}">Add Position</a>
   </div>
 </div>
 {% endblock %}
 
 
 {% block content %}
+<div class="row positions">
+    <div class="col-md-2 position">
+      Date Added
+    </div>
+    <div class="col-md-2 position">
+        Position Title
+      </div>
+      <div class="col-md-2 company">
+        Application Due Date
+      </div>
+      <div class="col-md-4 company">
+          Website
+      </div>
+      <div class="col-md-1 company">
+        Edit
+      </div>
+      <div class="col-md-1 company">
+        Delete
+      </div>
+</div>
 
 {% for position in positions %}
 {{ macros.render_position(position) }}

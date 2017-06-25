@@ -31,6 +31,17 @@ div.metadata {
   margin-bottom: 10px;
 }
 
+.company-header {
+  margin-top: -10px;
+  text-align: center;
+  margin-left: 50px;
+}
+
+.company-rows {
+  margin-bottom: 50px;
+  font-size: 1.2em;
+}
+
 .add-position {
   float:left;
   margin-bottom: 5px;

@@ -82,15 +82,15 @@ def delete_company(coid):
 
 @app.route("/companies/<int:coid>/positions", methods=["GET"])
 def positions(coid):
-    company = session.query(Company).get(id)
-    positions = session.query(Position).filter(Position.company_id == id).all()
-    return render_template('positions.html', positions=positions)
+    company = session.query(Company).get(coid)
+    positions = session.query(Position).filter(Position.company_id == coid).all()
+    return render_template('positions.html', company=company, positions=positions, coid=coid)
 
 @app.route("/companies/<int:coid>/positions/add", methods=["GET"])
 def add_position_get(coid):
     company = session.query(Company).get(coid)
     position = session.query(Position).filter(Position.company_id == coid).all()
-    return render_template("add_position.html", company=company, position=position)
+    return render_template("add_position.html", company=company, position=position, coid=coid)
 
 @app.route("/companies/<int:coid>/positions/add", methods=["POST"])
 def add_position_post(coid):
@@ -104,21 +104,21 @@ def add_position_post(coid):
     session.commit()
     return redirect(url_for('positions', coid=coid))
 
-@app.route("/companies/<int:coid>/position/<int:posid>/edit")
+@app.route("/companies/<int:coid>/positions/<int:posid>/edit")
 def edit_position_get(coid, posid):
     pass
 
-@app.route("/companies/<int:coid>/position/<int:posid>/edit")
+@app.route("/companies/<int:coid>/positions/<int:posid>/edit")
 def edit_position_post(coid, posid):
     pass
 
-@app.route("/companies/<int:coid>/position/<int:posid>/confirm-delete", methods=["GET", "DELETE"])
+@app.route("/companies/<int:coid>/positions/<int:posid>/confirm-delete", methods=["GET"])
 def delete_position_get(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
     return render_template("delete_position.html", position=position, company=company)
 
-@app.route("/companies/<int:coid>/position/<int:posid>/delete", methods=["POST", "DELETE"])
+@app.route("/companies/<int:coid>/positions/<int:posid>/delete", methods=["GET", "DELETE"])
 def delete_position(coid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
@@ -126,7 +126,7 @@ def delete_position(coid):
     session.commit()
     return redirect(url_for('positions', company=company, position=position))
 
-@app.route("/companies/<int:coid>/position/<int:posid>")
+@app.route("/companies/<int:coid>/positions/<int:posid>")
 def application(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
