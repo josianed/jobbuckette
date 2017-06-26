@@ -101,6 +101,8 @@
  {% if position.application %}
   <a class="edit btn btn-default" href="/companies/{{ company.id }}/positions/{{ position.id }}/applications/{{ application.id }}/edit"><span class="fa fa-pencil"></span>&nbsp;Edit Application&nbsp;</a>
 {% endif %}
+  <a class="edit btn btn-default" href="/companies/{{ company.id }}/positions"><span class="fa fa-arrow-left"></span>&nbsp;Back&nbsp;</a>
+
 {% endmacro %}
 
 {% macro add_application(application, company, position) %}
@@ -200,5 +202,6 @@
   </div>
   <button type="submit" class="btn btn-default"><span class="fa fa-floppy-o"></span>&nbsp;Save&nbsp;</button>
   <a class="confirm-cancel btn btn-default" href="{{ url_for('position_get', coid=company.id, posid=position.id) }}")><span class="fa fa-ban"></span>&nbsp;Cancel&nbsp;</a>
+  <a class="edit btn btn-default" href="/companies/{{ company.id }}/positions"><span class="fa fa-arrow-left"></span>&nbsp;Back&nbsp;</a>
 </form>
 {% endmacro %}
