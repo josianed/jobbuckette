@@ -153,9 +153,15 @@ def application_post(coid, posid):
         application_questions=(request.form.get("recruitmentQsCheckbox") == "on"),
         position_id=posid
     )
+    print(cv)
+    print(cover_letter)
+    print(application_questions)
+    print(request.form.get("cvCheckbox"))
+    print(request.form.get("recruitmentQsCheckbox"))
+    print(request.form.get("coverLetterCheckbox"))
     session.add(application)
     session.commit()
-    return redirect(url_for('position_get', coid=coid, posid=posid))
+    return redirect(url_for('position_get', coid=coid, posid=posid, application=application, company=company, position=position))
 
 @app.route("/companies/<int:coid>/positions/<int:posid>/applications/<int:appid>/edit")
 def application_edit_get(appid, coid, posid):
@@ -171,12 +177,27 @@ def application_edit(coid, posid, appid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
     application = session.query(Application).get(appid)
-    application.application_status=request.form.get("application-status"),
-    application.contact_info=request.form.get("contactInfoBox"),
-    application.recruitment_process=request.form.get("recruitmentProcessBox"),
-    application.cv=(request.form.get("cvCheckbox") == "on"),
-    application.cover_letter=(request.form.get("coverLetterCheckbox") == "on"),
-    application.application_questions=(request.form.get("recruitmentQsCheckbox") == "on"),
+    application.application_status=request.form.get("application-status")
+    application.contact_info=request.form.get("contactInfoBox")
+    application.recruitment_process=request.form.get("recruitmentProcessBox")
+    if request.form.get("cvCheckbox") == 'on':
+        application.cv=True
+    else:
+        application.cv=False
+    if request.form.get("coverLetterCheckbox") == 'on':
+        application.cover_letter=True
+    else:
+        application.cover_letter=False
+    if request.form.get("recruitmentQsCheckbox") == 'on':
+        application.application_questions=True
+    else:
+        application.application_questions=False
     application.position_id=posid
+    print(request.form.get("cvCheckbox"))
+    print(request.form.get("recruitmentQsCheckbox"))
+    print(request.form.get("coverLetterCheckbox"))
+    print(application.cv)
+    print(application.application_questions)
+    print(application.cover_letter)
     session.commit()
     return redirect(url_for('position_get', coid=company.id, posid=position.id))

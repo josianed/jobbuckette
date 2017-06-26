@@ -73,15 +73,15 @@
       <div class="checkbox-inline">
         <div class="checkbox-inline">
           <label for="checkbox-inline">CV</label>
-            <input disabled type="checkbox" name="cvCheckbox"{% if application.cv %} checked{% endif %}>
+            <input disabled type="checkbox" name="cvCheckbox"{% if application.cv %} checked="" {% endif %} {% if not application.cv %} {% endif %}>
         </div>
         <div class="checkbox-inline">
           <label for="checkbox-inline">Cover Letter</label>
-            <input disabled type="checkbox" name="coverLetterCheckbox"{% if application.cover_letter %} checked{% endif %}>
+            <input disabled type="checkbox" name="coverLetterCheckbox"{% if application.cover_letter %} checked="" {% endif %} {% if not application.cover_letter %} {% endif %}>
         </div>
         <div class="checkbox-inline">
-          <label for="checkbox-inline">Recruitment Questions</label>
-            <input disabled type="checkbox" name="recruitmentQsCheckbox"{% if application.application_questions %} checked{% endif %}>
+          <label for="checkbox-inline">Application Questions</label>
+            <input disabled type="checkbox" name="recruitmentQsCheckbox"{% if application.application_questions %} checked="" {% endif %} {% if not application.application_questions %} {% endif %}>
         </div>
       </div>
       <div class="form-group">
@@ -95,7 +95,6 @@
             </select>
       </div>
   </div>
-
   {% if not position.application %}
   <a class="edit btn btn-default" href="/companies/{{ company.id }}/positions/{{ position.id }}/applications/new"><span class="fa fa-plus"></span>&nbsp;New Application&nbsp;</a>
  {% endif %}
@@ -126,7 +125,7 @@
             <input type="checkbox" name="coverLetterCheckbox">
         </div>
         <div class="checkbox-inline">
-          <label for="checkbox-inline">Recruitment Questions</label>
+          <label for="checkbox-inline">Application Questions</label>
             <input type="checkbox" name="recruitmentQsCheckbox">
         </div>
       </div>
@@ -169,15 +168,15 @@
       <div class="checkbox-inline">
         <div class="checkbox-inline">
           <label for="checkbox-inline">CV</label>
-            <input type="checkbox" name="cvCheckbox" value="{{ application.cv }}">
+            <input type="checkbox"  name="cvCheckbox"{% if application.cv %} checked="" {% endif %} {% if not application.cv %} {% endif %}>
         </div>
         <div class="checkbox-inline">
           <label for="checkbox-inline">Cover Letter</label>
-            <input type="checkbox" name="coverLetterCheckbox" value="{{ application.cover_letter }}">
+            <input type="checkbox" name="coverLetterCheckbox"{% if application.cover_letter %} checked="" {% endif %} {% if not application.cover_letter %} {% endif %}>
         </div>
         <div class="checkbox-inline">
-          <label for="checkbox-inline">Recruitment Questions</label>
-            <input type="checkbox" name="recruitmentQsCheckbox" value="{{ application.application_questions }}">
+          <label for="checkbox-inline">Application Questions</label>
+            <input type="checkbox" name="recruitmentQsCheckbox"{% if application.application_questions %} checked="" {% endif %} {% if not application.application_questions %} {% endif %}>
         </div>
       </div>
       <div class="form-group">
@@ -198,7 +197,6 @@
               <option value="Offer Refused">Offer Refused</option>
               <option value="Completed">Completed</option>
             </select>
-
       </div>
   </div>
   <button type="submit" class="btn btn-default"><span class="fa fa-floppy-o"></span>&nbsp;Save&nbsp;</button>
