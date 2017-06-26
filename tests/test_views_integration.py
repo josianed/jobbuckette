@@ -1,6 +1,7 @@
 import os
 import unittest
 import datetime
+import json
 
 from urllib.parse import urlparse
 
@@ -40,49 +41,48 @@ class TestViews(unittest.TestCase):
 
     def test_add_company(self):
         response = self.client.post("/companies/add", data={
-            "name": "Test Company Name",
-            "location": "Test Location",
-            "industry": "Test Industry",
-            "link_to_website": "http://www.facebook.com"
+            "inputCompanyName": "Test Company Name",
+            "inputLocation": "Test Location",
+            "inputIndustry": "Test Industry",
+            "inputWebsite": "http://www.facebook.com"
         })
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(urlparse(response.location).path, "/companies")
         companies = session.query(Company).all()
-        self.assertEqual(len(companies), 1)
+        self.assertEqual(len(companies), 2)
 
         company = companies[1]
         self.assertEqual(company.name, "Test Company Name")
-        self.assertEqual(company.location, "Test content")
+        self.assertEqual(company.location, "Test Location")
         self.assertEqual(company.industry, "Test Industry")
         self.assertEqual(company.link_to_website, "http://www.facebook.com")
 
     def test_add_position(self):
         response = self.client.post("/companies/1/positions/add", data={
-            "position_name": "Test Position Name",
-            "company_id": 1,
-            "link_to_website": "http://www.facebook.com"
+            "inputPositionName": "Test Position Name",
+            "inputDueDate": "2019/09/09",
+            "inputWebsite": "http://www.facebook.com"
         })
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(urlparse(response.location).path, "/companies/1/positions")
         positions = session.query(Position).all()
-        self.assertEqual(len(positions), 1)
+        self.assertEqual(len(positions), 2)
 
-        position = positions[0]
+        position = positions[1]
         self.assertEqual(position.position_name, "Test Position Name")
-        self.assertEqual(position.company_id, 1)
+        self.assertEqual(position.date_due, datetime.datetime(2019, 9, 9, 0, 0))
         self.assertEqual(position.link_to_website, "http://www.facebook.com")
 
-    def test_add_application(self):
+    def test_add_application(self): # json.dumps --> takes dict and dumps as string
         response = self.client.post("/companies/1/positions/1/applications/create", data={
-            "application_status": "Submitted",
-            "contact_info": "Jane Doe +1 514 987-6543",
-            "recruitment_process": "Test recruitment process",
-            "cv": True,
-            "cover_letter": False,
-            "application_questions": True,
-            "position_id": 1
+            "application-status": "Submitted",
+            "contactInfoBox": "Jane Doe +1 514 987-6543",
+            "recruitmentProcessBox": "Test recruitment process",
+            "cvCheckbox": 'on',
+            "coverLetterCheckbox": '',
+            "recruitmentQsCheckbox": 'on'
         })
 
         self.assertEqual(response.status_code, 302)
@@ -92,8 +92,8 @@ class TestViews(unittest.TestCase):
 
         application = applications[0]
         self.assertEqual(application.application_status, "Submitted")
-        self.assertEqual(application.company_id, "Jane Doe +1 514 987-6543")
-        self.assertEqual(application.link_to_website, "Test recruitment process")
+        self.assertEqual(application.contact_info, "Jane Doe +1 514 987-6543")
+        self.assertEqual(application.recruitment_process, "Test recruitment process")
         self.assertEqual(application.cv, True)
         self.assertEqual(application.cover_letter, False)
         self.assertEqual(application.application_questions, True)
