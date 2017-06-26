@@ -187,15 +187,14 @@
             Application Status:&nbsp;&nbsp;
             <select name="application-status">
               <!-- TODO: Remove duplicate application statuses. Set "selected" instead. -->
-              <option selected value="{{ application.application_status }}">{{ application.application_status }}</option>
-              <option value="Pending">Pending</option>
-              <option value="Started">Started</option>
-              <option value="Submitted">Submitted</option>
-              <option value="Interviewing">Interviewing</option>
-              <option value="Offer">Offer</option>
-              <option value="Offer Accepted">Offer Accepted</option>
-              <option value="Offer Refused">Offer Refused</option>
-              <option value="Completed">Completed</option>
+              <option value="Pending" {% if application.application_status=="Pending" %} selected="selected"{% endif %}>Pending</option>
+              <option value="Started" {% if application.application_status=="Started" %} selected="selected"{% endif %}>Started</option>
+              <option value="Submitted" {% if application.application_status=="Submitted" %} selected="selected"{% endif %}>Submitted</option>
+              <option value="Interviewing" {% if application.application_status=="Interviewing" %} selected="selected"{% endif %}>Interviewing</option>
+              <option value="Offer" {% if application.application_status=="Offer" %} selected="selected"{% endif %}>Offer</option>
+              <option value="Offer Accepted" {% if application.application_status=="Offer Accepted" %} selected="selected"{% endif %}>Offer Accepted</option>
+              <option value="Offer Refused" {% if application.application_status=="Offer Refused" %} selected="selected"{% endif %}>Offer Refused</option>
+              <option value="Completed" {% if application.application_status=="Completed" %} selected="selected"{% endif %}>Completed</option>
             </select>
       </div>
   </div>

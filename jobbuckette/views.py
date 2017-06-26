@@ -144,21 +144,27 @@ def application_new_get(coid, posid):
 def application_post(coid, posid):
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
+    if request.form.get("cvCheckbox") == 'on':
+        cv=True
+    else:
+        cv=False
+    if request.form.get("coverLetterCheckbox") == 'on':
+        cover_letter=True
+    else:
+        cover_letter=False
+    if request.form.get("recruitmentQsCheckbox") == 'on':
+        application_questions=True
+    else:
+        application_questions=False
     application = Application(
         application_status=request.form.get("application-status"),
         contact_info=request.form.get("contactInfoBox"),
         recruitment_process=request.form.get("recruitmentProcessBox"),
-        cv=(request.form.get("cvCheckbox") == "on"),
-        cover_letter=(request.form.get("coverLetterCheckbox") == "on"),
-        application_questions=(request.form.get("recruitmentQsCheckbox") == "on"),
+        cv=cv,
+        cover_letter=cover_letter,
+        application_questions=application_questions,
         position_id=posid
     )
-    print(cv)
-    print(cover_letter)
-    print(application_questions)
-    print(request.form.get("cvCheckbox"))
-    print(request.form.get("recruitmentQsCheckbox"))
-    print(request.form.get("coverLetterCheckbox"))
     session.add(application)
     session.commit()
     return redirect(url_for('position_get', coid=coid, posid=posid, application=application, company=company, position=position))
@@ -172,8 +178,6 @@ def application_edit_get(appid, coid, posid):
 
 @app.route("/companies/<int:coid>/positions/<int:posid>/applications/<int:appid>/save", methods=["POST"])
 def application_edit(coid, posid, appid):
-    # TODO: fix update booleans
-    # TODO: prepopulate fields when editing
     company = session.query(Company).get(coid)
     position = session.query(Position).get(posid)
     application = session.query(Application).get(appid)
@@ -193,11 +197,5 @@ def application_edit(coid, posid, appid):
     else:
         application.application_questions=False
     application.position_id=posid
-    print(request.form.get("cvCheckbox"))
-    print(request.form.get("recruitmentQsCheckbox"))
-    print(request.form.get("coverLetterCheckbox"))
-    print(application.cv)
-    print(application.application_questions)
-    print(application.cover_letter)
     session.commit()
     return redirect(url_for('position_get', coid=company.id, posid=position.id))
