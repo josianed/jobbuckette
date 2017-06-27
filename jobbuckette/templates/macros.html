@@ -188,7 +188,6 @@
       <div class="dropdown application-docs col-md-8">
             Application Status:&nbsp;&nbsp;
             <select name="application-status">
-              <!-- TODO: Remove duplicate application statuses. Set "selected" instead. -->
               <option value="Pending" {% if application.application_status=="Pending" %} selected="selected"{% endif %}>Pending</option>
               <option value="Started" {% if application.application_status=="Started" %} selected="selected"{% endif %}>Started</option>
               <option value="Submitted" {% if application.application_status=="Submitted" %} selected="selected"{% endif %}>Submitted</option>
