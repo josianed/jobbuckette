@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block add %}
+<h3 class="add-company-title">Edit info for {{ company.name }}</h3>
+
+<form role="form" method="POST" class="form-horizontal">
+  <div class="form-group">
+    <label for="inputCompanyName" class="col-sm-2 control-label">Company Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="inputCompanyName" placeholder="Company Name" value="{{ company.name }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputLocation" class="col-sm-2 control-label">Location</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="inputLocation" placeholder="Location" value="{{ company.location }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputIndustry" class="col-sm-2 control-label">Industry</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="inputIndustry" placeholder="Industry" value="{{ company.industry }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputWebsite" class="col-sm-2 control-label">Website</label>
+    <div class="col-sm-10">
+      <input type="url" class="form-control" name="inputWebsite" placeholder="Website" value="{{ company.link_to_website }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Save Changes</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

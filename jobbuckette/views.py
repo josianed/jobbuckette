@@ -62,11 +62,18 @@ def add_company_post():
 
 @app.route("/companies/<int:coid>/edit")
 def edit_company_get(coid):
-    pass
+    company = session.query(Company).get(coid)
+    return render_template("edit_company.html", company=company)
 
-@app.route("/companies/<int:coid>/edit")
+@app.route("/companies/<int:coid>/edit", methods=["POST"])
 def edit_company_post(coid):
-    pass
+    company = session.query(Company).get(coid)
+    company.name = request.form.get("inputCompanyName")
+    company.location = request.form.get("inputLocation")
+    company.industry = request.form.get("inputIndustry")
+    company.link_to_website = request.form.get("inputWebsite")
+    session.commit()
+    return redirect(url_for('companies'))
 
 @app.route("/companies/<int:coid>/confirm-delete", methods=["GET"])
 def delete_company_get(coid):
